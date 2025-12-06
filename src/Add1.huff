@@ -13,5 +13,18 @@
 
 
 #define macro MAIN() = takes(0) returns(0) {
-
+//ok so lets get calldata first see if its the add1 function by checking the first 4 bytes
+  0x00 calldataload          //load the first 32 bytes of calldata 
+  0xe0 shr                   //shift right by 224 bits to get the first 4 bytes
+  0xa8365728 eq add1_func jumpi 
+    //if not equal we revert
+  0x00 0x00 revert
+  
+  add1_func:
+      //skip the first 4 bytes of calldata 
+      0x04 calldataload
+      0x01 add  //we add 1 to it             
+      0x40 mstore //store it at free memory pointer         
+      0x20 0x40 //then lets return 32 bytes from memory position 0x40
+      return        
 }
