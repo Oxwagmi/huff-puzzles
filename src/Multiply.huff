@@ -13,5 +13,51 @@
 
 
 #define macro MAIN() = takes(0) returns(0) {
+ 0x00 calldataload          //load the first 32 bytes of calldata 
+0xe0 shr                   //shift right by 224 bits to get the first 4 bytes
+__FUNC_SIG(multiply) eq multiply_func jumpi 
+    //if not equal we revert
+  0x00 0x00 revert
+  
+  multiply_func:
+      //skip the first 4 bytes of calldata 
+        0x04 calldataload  //first uint256 lets say n1
+        0x24 calldataload //second uint256 lets say n2
+           https://www.evm.codes/ opcode/DUP2
+        dup2 // duplicate n1 on stack now stack: n1, n2, n1
+        dup2 // duplicate n2 on stack  now stack:n2 n1 n2 n1
+        mul // multiply n1 and n2 now stack: n1*n2, n2, n1
+        // now we have n1*n2 on stack, n1 and n2 below it
+        // to check for overflow :
+        dup3 // duplicate n1 now stack: n1, n1*n2, n2, n1
+        iszero // check if n1 is zero
+        no_overflow jumpi // if n1 is zero, no overflow possible  so now stack: n1*n2, n2, n1 as n1 was consumed   
+        dup2 // duplicate n2  stack now : n2,n1*n2, n2, n1
+        iszero
+        no_overflow // check if n2 is zero
+        jumpi  // if n2 is zero, no overflow possible, jump to so now stack: n1*n2, n2, n1 as n2 was consumed
+        // now we know both n1 and n2 are non-zero
+        dup2 // duplicate n2 now stack: n2, n1*n2, n2, n1
+        dup4 // duplicate n1 now stack: n1, n2, n1*n2, n2, n1
+        dup3 // prouct of n1*n2 is at top now stack: n1*n2, n1 , n2, n1* n2 n2 n1
+        div // divide product by n1 now stack: (n1*n2)/n1, n2, (n1 * n2) n2 n1
+        eq // check if (n1*n2)/n1 == n2  now stack: bool, (n1 * n2) n2 n1
+        no_overflow jumpi // if equal no overflow so now stack: n1*n2, n2, n1 as (n1*n2)/n1 was consumed 
 
+        revert_overflow jumpi  // if overflow occurred, jump to revert
+        no_overflow:
+        //now stack: n1*n2, n2, n1 boolean  consumed  
+        // we can just pop n2 and n1 but pop cleans only one item top of stack so we use swap and pop
+        swap1 // now stack: n2, n1*n2, n1
+        pop // now stack: n1*n2, n1
+        swap1 // now stack: n1, n1*n2
+        pop // now stack: n1*n2
+        0x40 mstore //store the product at free memory pointer
+        0x20 0x40 //then lets return 32 bytes from memory position 0x40
+        return
+
+        revert_overflow:
+        0x00 0x00 revert    
+    
 }
+
