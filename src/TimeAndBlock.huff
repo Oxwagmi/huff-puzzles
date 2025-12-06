@@ -11,5 +11,29 @@
 
 
 #define macro MAIN() = takes(0) returns(0) {
+    //solution in huff
+    0x00 calldataload
+    //then we need to check if the function selector matches getTimeAndBlock for that we need to rightshift calldata by 224 bits
+    0xe0 shr
+    /**
+    cast sig "getTimeAndBlock()"
+0xce58b56e
+    */
+    0xce58b56e eq get_time_and_block
+    //if it matches we just JUMPDEST to the function get_time_and_block otherwise we revert
+    jumpi
+    //revert
+    0x00 0x00 revert
+
+    //function getTimeAndBlock
+    get_time_and_block:
+    
+    timestamp 0x00 mstore   //store timestamp at memory 0
+    number  0x20 mstore   //store block number at memory 32
+
+    0x40 0x00 return   //return 64 bytes from memory 0 
+   
+   
+
 
 }
