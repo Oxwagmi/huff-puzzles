@@ -58,7 +58,7 @@ You should see something like this
 - [TimeAndBlock](https://github.com/rareskills/huff-puzzles/blob/main/src/TimeAndBlock.huff)   ꪜ🟢
 - [MyEtherBalance](https://github.com/rareskills/huff-puzzles/blob/main/src/MyEtherBalance.huff)  ꪜ🟢
 - [Add1](https://github.com/rareskills/huff-puzzles/blob/main/src/Add1.huff)ꪜ🟢
-- [Multiply](https://github.com/rareskills/huff-puzzles/blob/main/src/Multiply.huff)
+- [Multiply](https://github.com/rareskills/huff-puzzles/blob/main/src/Multiply.huff)ꪜ🟢
 - [CountTime](https://github.com/rareskills/huff-puzzles/blob/main/src/CountTime.huff)
 - [NonPayable](https://github.com/rareskills/huff-puzzles/blob/main/src/NonPayable.huff)
 - [FooBar](https://github.com/rareskills/huff-puzzles/blob/main/src/FooBar.huff)
