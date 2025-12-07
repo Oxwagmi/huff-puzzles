@@ -24,7 +24,7 @@ __FUNC_SIG(multiply) eq multiply_func jumpi
         0x04 calldataload  //first uint256 lets say n1
         0x24 calldataload //second uint256 lets say n2
            https://www.evm.codes/ opcode/DUP2
-        dup2 // duplicate n1 on stack now stack: n1, n2, n1
+        dup2 // duplicate n1 on stack now stack: (top)n1, n2, n1
         dup2 // duplicate n2 on stack  now stack:n2 n1 n2 n1
         mul // multiply n1 and n2 now stack: n1*n2, n2, n1
         // now we have n1*n2 on stack, n1 and n2 below it

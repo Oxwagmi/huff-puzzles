@@ -14,5 +14,51 @@
 
 
 #define macro MAIN() = takes(0) returns(0) {
+ 0x00 calldataload
+    0xe0 shr
+    dup1
+    __FUNC_SIG(getTimeElapsed) eq getTimeElapsed_func jumpi //stack : func_sig, func_sig
+    __FUNC_SIG(getTimeUntil) eq getTimeUntil_func jumpi //stack : that eq consumed duplicated func_sig so one more left
+    0x00 0x00 revert
+
+    getTimeElapsed_func:
+        0x04 calldataload      // [_timestamp]
+        timestamp              // [current_time, _timestamp]
+        
+        // Check if current_time < _timestamp (return 0 if true)
+        dup2                   // [_timestamp, current_time, _timestamp]
+        dup2                   // [current_time, _timestamp, current_time, _timestamp]
+        lt                     // [current_time < _timestamp, current_time, _timestamp]
+        return_zero jumpi      // if current_time < _timestamp, return 0
+        
+        // Otherwise: current_time - _timestamp
+        sub                    // [current_time - _timestamp]
+        0x00 mstore
+        0x20 0x00 return
+        
+    
+
+    getTimeUntil_func:
+        0x04 calldataload      // [_timestamp]
+        timestamp              // [current_time, _timestamp]
+        
+       
+        dup2                   // [_timestamp, current_time, _timestamp]
+        dup2                   // [current_time, _timestamp, current_time, _timestamp]
+        gt                    // [ current_time > _timestamp, current_time, _timestamp]
+        return_zero jumpi      // if current_time > _timestamp, return 0
+        
+        // _timestamp > current_time: return difference
+        swap1                  // [_timestamp, current_time]
+        sub                    // [_timestamp - current_time]
+        0x00 mstore
+        0x20 0x00 return
+
+    return_zero:
+        pop pop                // Clean stack
+        0x00
+        0x00 mstore
+        0x20 0x00 return  
+            
 
 }
