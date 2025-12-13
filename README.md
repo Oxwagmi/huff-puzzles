@@ -63,9 +63,9 @@ You should see something like this
 - [NonPayable](https://github.com/rareskills/huff-puzzles/blob/main/src/NonPayable.huff) ꪜ🟢
 - [FooBar](https://github.com/rareskills/huff-puzzles/blob/main/src/FooBar.huff) ꪜ🟢
 - [MyCreator](https://github.com/rareskills/huff-puzzles/blob/main/src/MyCreator.huff)ꪜ🟢
-- [SimpleStore](https://github.com/rareskills/huff-puzzles/blob/main/src/SimpleStore.huff)
-- [RevertCustom](https://github.com/rareskills/huff-puzzles/blob/main/src/RevertCustom.huff)
-- [RevertString](https://github.com/rareskills/huff-puzzles/blob/main/src/RevertString.huff)
+- [SimpleStore](https://github.com/rareskills/huff-puzzles/blob/main/src/SimpleStore.huff)ꪜ🟢
+- [RevertCustom](https://github.com/rareskills/huff-puzzles/blob/main/src/RevertCustom.huff)ꪜ🟢
+- [RevertString](https://github.com/rareskills/huff-puzzles/blob/main/src/RevertString.huff)ꪜ🟢
 - [SumArray](https://github.com/rareskills/huff-puzzles/blob/main/src/SumArray.huff)
 - [Keccak](https://github.com/rareskills/huff-puzzles/blob/main/src/Keccak.huff)
 - [MaxOfArray](https://github.com/rareskills/huff-puzzles/blob/main/src/MaxOfArray.huff)

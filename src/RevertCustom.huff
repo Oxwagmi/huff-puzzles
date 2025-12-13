@@ -14,5 +14,11 @@
 #define error OnlyHuff()
 
 #define macro MAIN() = takes(0) returns(0) {
-    
+    // https://docs.huff.sh/get-started/huff-by-example/#custom-errors
+    __ERROR(OnlyHuff) 
+      
+    0x00 mstore 
+    0x04 0x00 revert 
+        
 }
+
